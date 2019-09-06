@@ -61,6 +61,9 @@
             font-family: Consolas;
             margin-right: 20px;
         }
+        .capimg{
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -75,13 +78,14 @@
         </div>
     </div>
     <div class="formdiv">
-        <form method="POST">
+        <form method="POST" > 
             <div class="formdiv"><label>CUSTOMER/AGENT?</label><br>
                 <span class="radio1"><input type="radio" name="category" value="Customer">Customer</span>
                 <span class="radio2"><input type="radio" name="category" value="Agent">Agent</span></div>
             <div class="formdiv"><label>CUSTOMER/AGENT ID</label><br><input type="text" name='id'></div>
-            <div class="formdiv"><label>PIN</label><br><input type="text" name='pass'></div>
-            <div class="formdiv"><h2 class="cap"><i>H</i>s7<i>S</i><b>A</b>0j</h2><label>ENTER CAPTCHA AS SHOWN</label><br><input type="text" name='captcha'></div>
+            <div class="formdiv"><label>PIN</label><br><input type="password" name='pass'></div>
+            <div class="formdiv"><div><img class='capimg' src='captcha.php' /></div>
+            <label>ENTER CAPTCHA AS SHOWN</label><br><input type="text" name='captcha'></div>
             <span><button type="submit" value="Proceed" name='Proceed'>PROCEED</button></span>
             <span><button type="button" value="Cancel"><a href="mainPage.html">CANCEL</a></button></span>
         </form>
@@ -104,7 +108,7 @@
                 $result=mysqli_query($connection,$query)
                         or die("failed to query1 database ");
                 $_SESSION['id']="";
-                if($_POST['captcha']!='Hs7SA0j'){
+                if($_POST['captcha']!=$_SESSION["captcha_code"]){
                     echo '<script type="text/javascript">alert("Invalid captcha code!!!")</script>';
                 }
                 else if(mysqli_num_rows($result)!=0&& $category=='Agent'){

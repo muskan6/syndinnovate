@@ -8,7 +8,7 @@
     $result=mysqli_query($connection,$query)
             or die("failed to query1 database ");
     $row=mysqli_fetch_array($result);
-    session_abort();
+    $_SESSION['admin_name']=$row['mr_ms']." ".$row['fname']." ".$row['lname'];
 
 ?>
 
@@ -107,37 +107,37 @@
     <div class="content-div">
         <div class="div1">
             <div>
-                <div><img class="images" src="addagent.png"><br></div>
+                <div><a href="registerAgent.php"><img class="images" src="addagent.png"></a><br></div>
                 <div class="titles1">ADD AGENTS</div>
             </div>
             <div>
-                <div><img class="images" src="manageaccounts.png"><br></div>
+                <div><a href="#manageaccounts"><img class="images" src="manageaccounts.png"></a><br></div>
                 <div class="titles2">MANAGE ACCOUNTS</div>
             </div>
             <div>
-                <div><img class="images" src="addbonus.png"><br></div>
+                <div><a href="#addbonus"><img class="images" src="addbonus.png"></a><br></div>
                 <div class="titles3">ADD BONUS</div>
             </div>
             <div>
-                <div><img class="images" src="notifics.png"><br></div>
+                <div><a href="#notifics"><img class="images" src="notifics.png"></a><br></div>
                 <div class="titles4">NOTIFICATIONS</div>
             </div>
         </div>
         <div class="div2">
             <div>
-                <div><img class="images" src="topagents.png"><br></div>
+                <div><a href="viewtopagents.php"><img class="images" src="topagents.png"></a><br></div>
                 <div class="titles5">VIEW TOP AGENTS</div>
             </div>
             <div>
-                <div><img class="images" src="targetshit.png"><br></div>
+                <div><a href="#target"><img class="images" src="targetshit.png"></a><br></div>
                 <div class="titles4">TARGETS HIT</div>
             </div>
             <div>
-                <div><img class="images" src="business.png"><br></div>
+                <div><a href="#business"><img class="images" src="business.png"></a><br></div>
                 <div class="titles6">BOOKED BUSINESSES</div>
             </div>
             <div>
-                <div><img class="images" src="upcoming.png"><br></div>
+                <div><a href="#upcoming"><img class="images" src="upcoming.png"></a><br></div>
                 <div class="titles6">UPCOMING EVENTS</div>
             </div>
         </div>

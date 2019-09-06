@@ -10,39 +10,49 @@
                     $dob=$_POST['dob'];
                     $idproof=$_POST['idproof'];
                     $idnum=$_POST['idnumber'];
-                    //$phn=$_POST['phn'];
+                    $phn=$_POST['phn'];
                     $email=$_POST['email'];
                     $address=$_POST['house']." ".$_POST['city']." ".$_POST['state']." ".$_POST['country'];
                     $pass=$_POST['pass1'];
                     $query="";
-                    $customerid=0;
+                    $agentid=0;
+                    $referral_id=0;
 
                     session_start();
                     
-                    //$_SESSION['phn']=array($phn);
-                    //$_SESSION['sendotp']=true;
                         while(true){
-                            $customerid=rand(1000000,9999999);
-                            $q1="SELECT * FROM customer WHERE customerid='$customerid'";
+                            
+                            $agentid=rand(1000000,9999999);
+                            $q1="SELECT * FROM AGENT WHERE agentid='$agentid'";
                             $result=mysqli_query($connection,$q1)
                                 or die("failed to query1 database ");
                             if(mysqli_num_rows($result)==0)
                             {   
-                                    break;
+                                 break;
                             }
                         }
-                        $_SESSION['customerid']=$customerid;
-                        $_SESSION['name']=$fname." ".$lname; 
+
+                        $flag=false;
+                        while($flag==false){
+                            
+                            $referral_id=rand(1000000,9999999);
+                            $q1="SELECT * FROM AGENT WHERE referral_id='$referral_id'";
+                            $result=mysqli_query($connection,$q1)
+                                or die("failed to query1 database ");
+                            if(mysqli_num_rows($result)==0)
+                            {
+                                 $flag=true;
+                            }
+                        }
                     
-                        $query="INSERT INTO customer(customerid, fname, lname, mr_ms, dob, id_proof_type, 
-                        id_proof_number, address, email, pass) 
-                        VALUES ('$customerid', '$fname', '$lname', '$desig', '$dob', '$idproof', '$idnum'
-                            , '$address', '$email', '$pass') ";
-                        
+                        $query="INSERT INTO agent(agentid, fname, lname, mr_ms, dob, id_proof_type, 
+                        id_proof_number, phoneNo, Address, email, pass, referral_id) 
+                        VALUES ('$agentid', '$fname', '$lname', '$desig', '$dob', '$idproof', '$idnum',
+                         '$phn', '$address', '$email', '$pass', '$referral_id') ";
+
                         $result=mysqli_query($connection,$query)
                         or die("failed to query1 database ");
-
-                        header("Location:otp.php");
+                        header("Location:Login.php");
                     
                 }else if(isset($_POST['Proceed'])&&strcmp($_POST['pass1'],$_POST['pass2'])!=0){
                     echo '<script type="text/javascript">alert("Password do not match!!!")</script>';
@@ -137,7 +147,6 @@
                 </div>
                 <div class="heads"><label>Password</label><input type="password"  name='pass1'placeholder="Enter password" required></div>
                 <div class="heads"><label>Confirm Password</label><input type="password" name='pass2' placeholder="Enter password again" required></div>
-               
                 <div class="heads"><label>Designation</label>
                     <select name='desig' required>
                         <option value="Mr">Mr.</option>
@@ -157,14 +166,14 @@
             </div>
 
             <div class="right"><span class="heading"><h2>CONTACT INFO</h2></span><br>
-                <!-- <div class="heads"><label>Phone No</label>
+                <div class="heads"><label>Phone No</label>
                     <select   >
                         <option value="+91">+91</option>
                         <option value="+08">+08</option>
                     </select>
                     <input type="number" minlength="10" maxlength="10" name='phn' required>
-                </div>-->
-                <div class="heads"><label>EMail ID</label><input type="email" name='email'></div> 
+                </div>
+                <div class="heads"><label>EMail ID</label><input type="email" name='email'></div>
                 <div class="heads">
                     <div><label>Street/ House No.</label><input type="text" name='house' required></div>
                     <div class="insidedivs"><label>City</label><input type="text" name='city' required></div>
